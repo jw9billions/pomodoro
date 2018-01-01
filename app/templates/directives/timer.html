@@ -1,4 +1,6 @@
 <div class="timer">
-  {{ workTimer | timecode }}
-  <button type="button" ng-click="toggle()">{{ action }}</button>
+  <div class="countdown">
+    {{workTimer | timecode}}
+  </div>
+  <button type="button" ng-class="isActive? 'button-stop' : 'button-start'" ng-click="toggle()">{{ buttonText }}</button>
 </div>

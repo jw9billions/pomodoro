@@ -1,3 +1,32 @@
 body {
   padding: 20px;
+  background-color: brown;
+}
+
+h1 {
+  text-align: center;
+  color: darkgray;
+}
+
+img {
+  margin-left: 415px;
+}
+
+.countdown {
+  text-align: center;
+  font-size: 4em;
+  color: white;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+button {
+  margin-left: 470px;
+  background: green;
+  font-size: 20px;
+  text-align: center;
+  padding: .10em .10em;
+  font-weight: 600;
+  min-width: 8em;
+  min-height: 2em;
 }

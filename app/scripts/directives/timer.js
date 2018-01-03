@@ -1,5 +1,5 @@
 (function() {
-  function timer ($interval) {
+  function timer ($interval, MY_TIMES) {
 
     return {
       templateUrl: '/templates/directives/timer.html',
@@ -10,24 +10,47 @@
 
         var interval, incrementTimer;
 
-        scope.buttonText = "Start";
+        scope.onBreak = false;
         scope.isActive = false;
-        scope.workTimer = 10;
+        scope.buttonText = "Start";
+        scope.currentTime = MY_TIMES.work;
+
+        var startTimer = function () {
+          interval = $interval(incrementTimer, 1000);
+          scope.isActive = true;
+          scope.buttonText = "Stop";
+        };
 
         incrementTimer = function() {
-          scope.workTimer -- ;
+          scope.currentTime -- ;
+
+          if (scope.currentTime <= 0) {
+            if (!scope.onBreak) {
+              scope.onBreak = true;
+            } else {
+              scope.onBreak = false;
+            }
+            resetTimer();
+          };
+        };
+
+        var resetTimer = function () {
+          $interval.cancel(interval);
+          scope.isActive = false;
+          scope.buttonText = "Start";
+
+          if (scope.onBreak) {
+            scope.currentTime = MY_TIMES.break;
+          } else {
+            scope.currentTime = MY_TIMES.work;
+          }
         };
 
         scope.toggle = function () {
-          if (scope.isActive == false) {
-            scope.buttonText = "Stop";
-            interval = $interval(incrementTimer, 1000, 10);
-            scope.isActive = true;
-          } else if (scope.isActive == true) {
-            scope.buttonText = "Start";
-            $interval.cancel(interval);
-            scope.workTimer = 10;
-            scope.isActive = false;
+          if (!scope.isActive) {
+            startTimer();
+          } else {
+            resetTimer();
           }
         };
       }
@@ -36,5 +59,9 @@
 
   angular
     .module('pomodoroTime')
-    .directive('timer', timer);
+    .directive('timer', timer)
+    .constant('MY_TIMES', {
+      "work": 10,
+      "break": 3
+    });
 })();

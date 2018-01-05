@@ -14,6 +14,7 @@
         scope.isActive = false;
         scope.buttonText = "Start";
         scope.currentTime = MY_TIMES.work;
+        scope.completedWorkSesh = 1;
 
         var startTimer = function () {
           interval = $interval(incrementTimer, 1000);
@@ -25,11 +26,6 @@
           scope.currentTime -- ;
 
           if (scope.currentTime <= 0) {
-            if (!scope.onBreak) {
-              scope.onBreak = true;
-            } else {
-              scope.onBreak = false;
-            }
             resetTimer();
           };
         };
@@ -39,10 +35,24 @@
           scope.isActive = false;
           scope.buttonText = "Start";
 
-          if (scope.onBreak) {
-            scope.currentTime = MY_TIMES.break;
+          console.log("scope.onBreak", scope.onBreak);
+          if (!scope.onBreak) {
+            console.log("scope.completedWorkSesh", scope.completedWorkSesh);
+            if (scope.completedWorkSesh === 2) {
+              console.log("completedWorkSesh is 2");
+              scope.currentTime = MY_TIMES.longBreak;
+              scope.onBreak = true;
+              scope.completedWorkSesh= 0;
+            } else {
+              console.log("hit the else");
+              scope.currentTime = MY_TIMES.break;
+              scope.onBreak = true;
+              scope.completedWorkSesh ++;
+              console.log("scope.completedWorkSesh", scope.completedWorkSesh);
+            }
           } else {
             scope.currentTime = MY_TIMES.work;
+            scope.onBreak = false;
           }
         };
 
@@ -62,6 +72,7 @@
     .directive('timer', timer)
     .constant('MY_TIMES', {
       "work": 10,
-      "break": 3
+      "break": 3,
+      "longBreak": 6
     });
 })();

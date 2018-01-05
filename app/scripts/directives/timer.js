@@ -14,7 +14,7 @@
         scope.isActive = false;
         scope.buttonText = "Start";
         scope.currentTime = MY_TIMES.work;
-        scope.completedWorkSesh = 1;
+        scope.completedWork = 1;
 
         var startTimer = function () {
           interval = $interval(incrementTimer, 1000);
@@ -26,34 +26,38 @@
           scope.currentTime -- ;
 
           if (scope.currentTime <= 0) {
+            runSessions();
             resetTimer();
           };
         };
 
-        var resetTimer = function () {
-          $interval.cancel(interval);
-          scope.isActive = false;
-          scope.buttonText = "Start";
-
-          console.log("scope.onBreak", scope.onBreak);
+        var runSessions = function () {
           if (!scope.onBreak) {
-            console.log("scope.completedWorkSesh", scope.completedWorkSesh);
-            if (scope.completedWorkSesh === 2) {
-              console.log("completedWorkSesh is 2");
+            if (scope.completedWork === 2) {
               scope.currentTime = MY_TIMES.longBreak;
               scope.onBreak = true;
-              scope.completedWorkSesh= 0;
+              scope.completedWork= 0;
             } else {
-              console.log("hit the else");
               scope.currentTime = MY_TIMES.break;
               scope.onBreak = true;
-              scope.completedWorkSesh ++;
-              console.log("scope.completedWorkSesh", scope.completedWorkSesh);
+              scope.completedWork ++;
             }
           } else {
             scope.currentTime = MY_TIMES.work;
             scope.onBreak = false;
           }
+
+          mySound.play();
+        };
+
+        var mySound = new buzz.sound( "assets/sounds/ding.mp3", {
+          preload: true
+        });
+
+        var resetTimer = function () {
+          $interval.cancel(interval);
+          scope.isActive = false;
+          scope.buttonText = "Start";
         };
 
         scope.toggle = function () {

@@ -2,6 +2,22 @@
 <div>
   <img src="assets/pomodoro.jpeg">
 </div>
-<br />
-<div ng-controller="HomeCtrl"></div>
+
+<aside>
+  <div class="tasks">
+    <p id = "completed-list">Completed Tasks</p>
+    <form ng-submit = "addTask()">
+      <input type = "text" class="task-input" ng-model = "newTask.text" placeholder="enter new task" />
+      <button type = "submit" class="add-button">add</button>
+    </form>
+    <br />
+    <table>
+      <tr ng-repeat = "task in tasks">
+        <td>{{task.text}}</td>
+        <td><button class="remove-button" ng-click="tasks.$remove(task)">remove</button></td>
+      </tr>
+    </table>
+  </div>
+</aside>
+
 <timer></timer>

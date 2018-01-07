@@ -7,22 +7,20 @@
       restrict: 'E',
       scope: { },
       link: function(scope, elemnt, attibutes) {
-
-        var interval, incrementTimer;
-
         scope.onBreak = false;
         scope.isActive = false;
         scope.buttonText = "Start";
         scope.currentTime = MY_TIMES.work;
         scope.completedWork = 1;
 
+        var interval;
         var startTimer = function () {
           interval = $interval(incrementTimer, 1000);
           scope.isActive = true;
           scope.buttonText = "Stop";
         };
 
-        incrementTimer = function() {
+        var incrementTimer = function() {
           scope.currentTime -- ;
 
           if (scope.currentTime <= 0) {

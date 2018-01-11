@@ -45,11 +45,17 @@
             scope.onBreak = false;
           }
 
-          mySound.play();
         };
 
         var mySound = new buzz.sound( "assets/sounds/ding.mp3", {
           preload: true
+        });
+
+        scope.$watch("currentTime", function (value) {
+          console.log("inside watch", value);
+          if (value === 1) {
+            mySound.play();
+          }
         });
 
         var resetTimer = function () {

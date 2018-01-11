@@ -30,11 +30,12 @@ aside {
 }
 
 .time-button {
-  margin-left: 470px;
   background: green;
   font-size: 20px;
   min-width: 8em;
   min-height: 2em;
+  position: relative;
+  left: 25%;
 }
 
 .add-button {
@@ -47,4 +48,8 @@ aside {
 .remove-button {
   background: yellow;
   font-size: 12px;
+}
+
+.tasks {
+  height: 250px;
 }
